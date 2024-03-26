@@ -1,0 +1,10 @@
+{
+    "user": {
+        "id": 1,
+        "username": "juventude",
+        "name": "juventude",
+        "password": "admin",
+        "image": "https://upload.wikimedia.org/wikipedia/pt/8/8c/EC_Juventude.png",
+        "token": "1a2b3c4d"
+    }
+}
