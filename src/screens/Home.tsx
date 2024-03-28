@@ -2,7 +2,7 @@
 import { useContext, useEffect, useState } from "react";
 import { View, StyleSheet, FlatList,Image } from "react-native";
 import { Task } from "../types/Task";
-import { categories } from "../utils/data";
+import { categories } from "../utils/data/data";
 import CategoryItem from "../components/CategoryItem";
 import ItemCard from "../components/ItemCard";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -18,61 +18,28 @@ import { TaskContext } from "../contexts/TaskContext";
 
 const Home = () => {
   const {
+    taskList,
+    selectedCategory,
+    handleSelectCategory,
+    handleRemoveTask,
+    handleDoneTask,
     getTasks,
-    getTasksByCategory,
-    getCompletedTasks,
-    removeTask,
-    doneTask,
-    tasks,
+    db
   } = useContext(TaskContext);
 
-  const [taskList, setTaskList] = useState<Task[]>([]);
-  const [taskInput, setTaskInput] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState("all");
-  const { getUser, user } = useContext(UserContext);
-  const [open, setOpen] = useState(false);
-  const [categoryValue, setCategoryValue] = useState(null);
+  const {user} = useContext(UserContext);
 
-  const handleGetTasks = () => {
-    setTaskList(tasks);
-  };
-
-  const handleGetTasksByCategory = (category: string) => {
-    getTasksByCategory(category);
-    setTaskList(tasks);
-  };
-
-  const handleDoneTask = (id: number) => {
-    doneTask(id);
-    setTaskList(tasks);
-  };
-
-  const handleRemoveTask = (id: number) => {
-    removeTask(id);
-    setTaskList(tasks);
-  };
-
-  
-
-  const handleSelectCategory = (type: string) => {
-    setSelectedCategory(type);
-    switch (type) {
-      case "all":
-        getTasks();
-        break;
-      case "done":
-        getCompletedTasks();
-        break;
-      default:
-        getTasksByCategory(type);
-    }
-  };
-
-  console.log("tasklist " + taskList);
 
   useEffect(() => {
-    getUser()
+    db.transaction((tx) => {
+      tx.executeSql(
+        "create table if not exists tasks (id integer primary key not null, completed int, title text, category text, date text);"
+      );
+    });
+    getTasks();
   }, []);
+
+
 
   let [fontsLoaded, fontError] = useFonts({
     Inter_900Black,

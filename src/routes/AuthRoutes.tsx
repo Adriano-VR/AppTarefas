@@ -1,6 +1,7 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Login from "../screens/Login";
-import Criar from "../screens/Criar";
+import Criar from "../screens/AddTask";
+import React from "react"
 
 const Stack = createNativeStackNavigator();
 

@@ -1,6 +1,6 @@
 import { Alert, Text } from "react-native";
 import { Task } from "../types/Task";
-import { categories } from "../utils/data";
+import { categories } from "../utils/data/data";
 import { View } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import { Swipeable } from "react-native-gesture-handler";
@@ -9,6 +9,7 @@ import { LightSpeedInRight, LightSpeedOutLeft } from 'react-native-reanimated';
 import Animated from 'react-native-reanimated';
 import { SlideInRight, SlideOutLeft } from 'react-native-reanimated';
 import { useCustomFonts } from '../fonts/useCustomFonts';
+import moment from "moment";
 
 
 
@@ -102,6 +103,7 @@ const ItemCard = ({ task, handleRemoveTask, handleDoneTask }: Props) => {
               
 
           <Text style={{color:'white', fontFamily: 'LuckiestGuy_400Regular',}}>{task.title}</Text>
+          <Text>{moment(task.date).format("DD/MM/YY")}</Text>
         </Animated.View>
       </Swipeable>
     </View>

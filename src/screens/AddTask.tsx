@@ -1,34 +1,61 @@
 import { SafeAreaView } from "react-native-safe-area-context"
-import { Text, TouchableOpacity, View ,StyleSheet, TextInput, Task} from "react-native"
+import { Text, TouchableOpacity, View ,StyleSheet, TextInput} from "react-native"
 import { colors } from "../Colors/colors"
 import DropDownPicker from "react-native-dropdown-picker"
-import React, { useState, useContext } from "react"
-import { UserContext } from "../contexts/UserContext"
-import { categories } from "../utils/data"
+import React, { useContext, useState } from "react"
+import { categories } from "../utils/data/data"
 import { Feather } from '@expo/vector-icons';
-import { Ionicons } from "@expo/vector-icons";
 import { TaskContext } from "../contexts/TaskContext"
-
+import DateTimePicker from "@react-native-community/datetimepicker";
+import { Foundation } from '@expo/vector-icons';
 
 
 const Criar = () => {
 
-    const [taskList, setTaskList] = useState<Task[]>([]);
-  const [taskInput, setTaskInput] = useState("");
-  const [categoryValue, setCategoryValue] = useState(null);
-  const [selectedCategory, setSelectedCategory] = useState("all");
-  const [open, setOpen] = useState(false);
-  const { getUser, user } = useContext(UserContext);
-  const { addTask} = useContext(TaskContext);
+  const {
+    taskInput,
+    setTaskInput,
+    setCategoryValue,
+    categoryValue,
+    handleAddTask,
+    setOpen,
+    open,
+    dateInput,
+    setDateInput,
+  } = useContext(TaskContext);
 
-  const handleAddTask = async () => {
-    addTask(taskInput, categoryValue);
-    setTaskInput("");
-    setCategoryValue(null);
+  const [mode, setMode] = useState<"date" | "time">("date");
+  const [show, setShow] = useState(false);
+
+  const onChange = (event: any, selectedDate: any) => {
+    const currentDate = selectedDate;
+    setShow(false);
+    setDateInput(currentDate);
   };
+
+  
+  const showMode = (currentMode: React.SetStateAction<"date" | "time">) => {
+    setShow(true);
+    setMode(currentMode);
+  };
+
+  const showDatePicker = () => {
+    showMode("date");
+  };
+
+ 
     return(
 
         <SafeAreaView style={{ backgroundColor: colors.cor2, flex: 1 }}>
+            {show && (
+        <DateTimePicker
+          testID="dateTimePicker"
+          value={dateInput}
+          mode={mode}
+          is24Hour={true}
+          onChange={onChange}
+        />
+      )}
             <View style={styles.textinput}>
         <TextInput
           style={styles.input}
@@ -98,18 +125,24 @@ const Criar = () => {
               <Feather name="arrow-up-circle" size={24} color="white" />
             )}zIndex={999}
           
+
+            
           />
 
-          <TouchableOpacity
-             onPress={handleAddTask}
+
+      
+          <Foundation name="calendar" size={34} color="white"   onPress={showDatePicker} />
+        
+
+        
+          
+        </View>
+        <TouchableOpacity onPress={handleAddTask}
             style={{ alignItems: "center", paddingLeft: 10 }}
           >
           <Text style={{color:'white'}}>Add</Text>
           
           </TouchableOpacity>
-          
-        </View>
-         
       </View>
            
         </SafeAreaView>

@@ -1,21 +1,31 @@
-import axios from "axios";
 import { ReactNode, createContext, useState } from "react";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { UserDTO } from "../types/User";
-import Toast from "react-native-root-toast";
-import userJSON from "../utils/user.json"
-import {openDatabase} from "../utils/db";
+
 import { Task } from "../types/Task";
+import React from "react"
+import * as SQLite from "expo-sqlite";
+import moment from "moment";
+
 
 type TaskContextProps = {
   getTasks:() => any;
+  open: boolean;
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
   getTasksByCategory: (category: string) => any;
   getCompletedTasks: () => any;
-  addTask: (taskInput: string, categoryValue: string) => any;
-  removeTask: (id: number ) => any;
-  doneTask: (id:number) => any;
-  tasks: Task[];
-  setTasks: (task: Task[]) => void ;
+  handleAddTask: () => void;
+  handleRemoveTask: (id: number ) => any;
+  handleDoneTask: (id:number) => any;
+  taskList: Task[];
+  categoryValue: string | null;
+  selectedCategory: string;
+  handleSelectCategory: (type: string) => void;
+  db: SQLite.SQLiteDatabase;
+  taskInput: string;
+  setTaskInput: (value: string) => void;
+  setCategoryValue: React.Dispatch<React.SetStateAction<null>>;
+  dateInput: Date;
+  setDateInput: (value: Date) => void;
+  getTasksByDate: (date: string) => void;
 };
 
 type TaskProviderProps = {
@@ -27,32 +37,47 @@ export const TaskContext = createContext<TaskContextProps>(
 );
 
 export const TaskContextProvider = ({ children }: TaskProviderProps) => {
-  const db = openDatabase()
   
+  const [taskList, setTaskList] = useState<Task[]>([]);
+  const [categoryValue, setCategoryValue] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState("all");
+  const [taskInput, setTaskInput] = useState("");
+  const [open, setOpen] = useState<boolean>(false);
+  const [dateInput, setDateInput] = useState(new Date());
+  const [dateSelected, setDateSelected] = useState("");
+
+
+  
+  const openDatabase = () => {
+    const db = SQLite.openDatabase("db.db");
+    return db;
+  };
+
+  const db = openDatabase();
+
+    
   const getTasks = async () => {
     db.transaction((tx) => {
       tx.executeSql(
         `SELECT * FROM tasks WHERE completed = 0;`,
         [],
         (_, { rows: { _array } }) => {
-          setTasks(_array)
+          setTaskList(_array)
         }
       );
     });
   };
 
-  const getTasksByCategory = async (category: string) => {
+  const getTasksByCategory = (category: string) => {
     db.transaction((tx) => {
       tx.executeSql(
-        `SELECT * FROM tasks WHERE completed = 0 AND category = ?;`,
-        [category],
+        `select * from tasks where completed = 0 and category = ? and date = ?;`,
+        [category, dateSelected],
         (_, { rows: { _array } }) => {
-          setTasks(_array)
+          setTaskList(_array);
         }
       );
     });
-
-    
   };
 
   const getCompletedTasks = () => {
@@ -61,61 +86,94 @@ export const TaskContextProvider = ({ children }: TaskProviderProps) => {
         `SELECT * FROM tasks WHERE completed = 1;`,
         [],
         (_, { rows: { _array } }) => {
-          setTasks(_array)
+          setTaskList(_array)
+        }
+      );
+    });
+  };
+
+  const getTasksByDate = (date: string) => {
+    setDateSelected(date);
+    const query =
+      categoryValue === "all"
+        ? `select * from tasks where completed = 0 and date = ?;`
+        : `select * from tasks where completed = 0 and date = ? and category = ?;`;
+    db.transaction((tx) => {
+      tx.executeSql(
+        query,
+        selectedCategory === "all" ? [date] : [date, selectedCategory],
+        (_, { rows: { _array } }) => {
+          setTaskList(_array);
         }
       );
     });
   };
 
 
-  const addTask = (taskInput: string, categoryValue: string) => {
+  const handleAddTask = async () => {
     if (taskInput !== "" && categoryValue) {
-    
-    db.transaction((tx) => {
+      db.transaction((tx) => {
         tx.executeSql(
-          "INSERT INTO tasks (completed, title, category) VALUES (0, ?, ?);",
-          [taskInput, categoryValue]
+          "insert into tasks (completed, title, category, date) values (0, ?, ?, ?)",
+          [taskInput, categoryValue, moment(dateInput).format("YYYY-MM-DD")]
         );
         tx.executeSql(
-          `SELECT * FROM tasks WHERE completed = 0;`,
+          `select * from tasks where completed = 0;`,
           [],
           (_, { rows: { _array } }) => {
-            return _array
+            setTaskList(_array);
           }
         );
       });
     }
-  }
 
-  const removeTask = (id: number) => {
+    setTaskInput("");
+    setCategoryValue(null);
+  };
+
+  const handleRemoveTask = (id: number) => {
     db.transaction((tx) => {
       tx.executeSql("DELETE FROM tasks WHERE id = ?;", [id]);
       tx.executeSql(
         `SELECT * FROM tasks WHERE completed = 0;`,
         [],
         (_, { rows: { _array } }) => {
-          setTasks(_array)
+          setTaskList(_array)
         }
       );
     });
   };
 
-  const doneTask = (id: number) => {
+  const handleDoneTask = (id: number) => {
     db.transaction((tx) => {
       tx.executeSql("UPDATE tasks SET completed = ? WHERE id = ? ;", [1, id]);
       tx.executeSql(
         `SELECT * FROM tasks WHERE completed = 0;`,
         [],
         (_, { rows: { _array } }) => {
-            setTasks(_array)
+            setTaskList(_array)
         }
       );
     });
   };
 
 
+  const handleSelectCategory = (type: string) => {
+    setSelectedCategory(type);
+    switch (type) {
+      case "all":
+        getTasks();
+        break;
+      case "done":
+        getCompletedTasks();
+        break;
+      default:
+        getTasksByCategory(type);
+    }
+  };
 
-  const [tasks, setTasks] = useState<Task[] | null>(null)
+
+
 
   return (
     <TaskContext.Provider
@@ -123,11 +181,22 @@ export const TaskContextProvider = ({ children }: TaskProviderProps) => {
         getTasks,
         getTasksByCategory,
         getCompletedTasks,
-        addTask,
-        removeTask,
-        doneTask,
-        tasks,
-        setTasks
+        handleAddTask,
+        handleRemoveTask,
+        handleDoneTask,
+        taskList,
+        categoryValue,
+        handleSelectCategory,
+        selectedCategory,
+        db,
+        taskInput,
+        setTaskInput,
+        setCategoryValue,
+        open,
+        setOpen,
+        dateInput,
+      setDateInput,
+      getTasksByDate
       }}
     >
       {children}

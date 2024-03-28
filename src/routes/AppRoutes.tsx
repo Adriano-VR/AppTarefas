@@ -7,7 +7,8 @@ import { colors } from "../Colors/colors";
 import { useNavigation } from "@react-navigation/native";
 import { TouchableOpacity,Text } from "react-native";
 import { FontAwesome } from '@expo/vector-icons';
-import Criar from "../screens/Criar";
+import Criar from "../screens/AddTask";
+import React from "react"
 
 const Stack = createNativeStackNavigator();
 
