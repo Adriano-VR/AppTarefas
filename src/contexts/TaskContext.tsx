@@ -173,8 +173,6 @@ export const TaskContextProvider = ({ children }: TaskProviderProps) => {
   };
 
 
-
-
   return (
     <TaskContext.Provider
       value={{

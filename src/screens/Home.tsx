@@ -48,6 +48,9 @@ const Home = () => {
 
   console.log(taskList);
   
+  console.log(handleSelectCategory);
+  
+  
 
   if (!fontsLoaded && !fontError) {
     return null;
