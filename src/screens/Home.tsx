@@ -46,6 +46,9 @@ const Home = () => {
     LuckiestGuy_400Regular,
   });
 
+  console.log(taskList);
+  
+
   if (!fontsLoaded && !fontError) {
     return null;
   }

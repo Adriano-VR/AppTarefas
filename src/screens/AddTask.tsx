@@ -1,5 +1,5 @@
 import { SafeAreaView } from "react-native-safe-area-context"
-import { Text, TouchableOpacity, View ,StyleSheet, TextInput} from "react-native"
+import { Text, TouchableOpacity, View ,StyleSheet, TextInput, Alert} from "react-native"
 import { colors } from "../Colors/colors"
 import DropDownPicker from "react-native-dropdown-picker"
 import React, { useContext, useState } from "react"
@@ -8,6 +8,7 @@ import { Feather } from '@expo/vector-icons';
 import { TaskContext } from "../contexts/TaskContext"
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { Foundation } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
 
 
 const Criar = () => {
@@ -129,20 +130,17 @@ const Criar = () => {
             
           />
 
-
       
-          <Foundation name="calendar" size={34} color="white"   onPress={showDatePicker} />
-        
-
-        
+          <Foundation style={{paddingLeft:15}} name="calendar" size={60} color="white"  onPress={showDatePicker} />
           
         </View>
-        <TouchableOpacity onPress={handleAddTask}
-            style={{ alignItems: "center", paddingLeft: 10 }}
-          >
-          <Text style={{color:'white'}}>Add</Text>
+        <Ionicons name="add-circle-sharp" size={60} color="green" style={{alignSelf:'center'}} onPress={() => {
           
-          </TouchableOpacity>
+          Alert.alert('Tudo certo')
+          handleAddTask()} 
+        }
+          />
+      
       </View>
            
         </SafeAreaView>
