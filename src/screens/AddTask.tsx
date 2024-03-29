@@ -143,10 +143,7 @@ const Criar = () => {
       
       </View>
 
-      <TouchableOpacity onPress={handleAddTask}>
-
-        <Text>dadawd</Text>
-      </TouchableOpacity>
+     
            
         </SafeAreaView>
     )

@@ -68,26 +68,34 @@ export const TaskContextProvider = ({ children }: TaskProviderProps) => {
     });
   };
 
-
-  
-
   const getTasksByCategory = (category: string) => {
-    
-    
     db.transaction((tx) => {
+      let sqlQuery;
+      let params;
+  
+      if (dateSelected) {
+      
+        sqlQuery = `select * from tasks where completed = 0 and category = ? and date = ?;`;
+        params = [category, dateSelected];
+      } else {
+      
+        sqlQuery = `select * from tasks where completed = 0 and category = ?;`;
+        params = [category];
+      }
+  
       tx.executeSql(
-        `select * from tasks where completed = 0 and category = ? and date = ?;`,
-        // `select * from tasks where completed = 0 and category = ? ;`,
-        [category, dateSelected],
-        // [category],
+        sqlQuery,
+        params,
         (_, { rows: { _array } }) => {
           setTaskList(_array);
-          console.log('pesquias ' + _array);
-          
         }
       );
     });
   };
+  
+  
+
+  
 
   const getCompletedTasks = () => {
     db.transaction((tx) => {
@@ -102,8 +110,6 @@ export const TaskContextProvider = ({ children }: TaskProviderProps) => {
   };
 
   const getTasksByDate = (date: string) => {
-
-  
     setDateSelected(date);
     const query =
       categoryValue === "all"
@@ -118,6 +124,8 @@ export const TaskContextProvider = ({ children }: TaskProviderProps) => {
         }
       );
     });
+
+    
   };
 
 

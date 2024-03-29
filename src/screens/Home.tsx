@@ -25,7 +25,8 @@ const Home = () => {
     handleRemoveTask,
     handleDoneTask,
     getTasks,
-    db
+    db,
+
   } = useContext(TaskContext);
 
   const {user} = useContext(UserContext);
@@ -47,11 +48,7 @@ const Home = () => {
     LuckiestGuy_400Regular,
   });
 
-  console.log(taskList);
-  
-  console.log(selectedCategory);
-  
-  
+ 
 
   if (!fontsLoaded && !fontError) {
     return null;
