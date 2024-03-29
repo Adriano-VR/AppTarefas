@@ -79,7 +79,7 @@ const WeekCalendar = () => {
   };
 
   return (
-    <CalendarView>
+    <CalendarView style={{width:'95%',alignSelf:'center'}}>
       <TopDateInfo>
         <DatePrevArea onPress={previousMonthClick}>
           <MaterialIcons name="arrow-back" size={24} color="#fafafa" />

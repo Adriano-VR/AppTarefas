@@ -135,13 +135,18 @@ const Criar = () => {
           
         </View>
         <Ionicons name="add-circle-sharp" size={60} color="green" style={{alignSelf:'center'}} onPress={() => {
-          
+            
           Alert.alert('Tudo certo')
           handleAddTask()} 
         }
           />
       
       </View>
+
+      <TouchableOpacity onPress={handleAddTask}>
+
+        <Text>dadawd</Text>
+      </TouchableOpacity>
            
         </SafeAreaView>
     )

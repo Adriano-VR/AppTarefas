@@ -15,6 +15,9 @@ const CategoryItem = ({
 }: Props) => {
   const selecionado = selectedCategory === item.value;
 
+
+  
+
   return (
     <TouchableOpacity onPress={() => handleSelectCategory(item.value)}>
       <Text

@@ -15,6 +15,7 @@ import { FlipInYRight, FlipOutYRight } from "react-native-reanimated";
 import { useFonts, Inter_900Black } from "@expo-google-fonts/inter";
 import { LuckiestGuy_400Regular } from "@expo-google-fonts/luckiest-guy";
 import { TaskContext } from "../contexts/TaskContext";
+import WeekCalendar from "../components/WeekCalendar";
 
 const Home = () => {
   const {
@@ -48,7 +49,7 @@ const Home = () => {
 
   console.log(taskList);
   
-  console.log(handleSelectCategory);
+  console.log(selectedCategory);
   
   
 
@@ -57,6 +58,9 @@ const Home = () => {
   }
   return (
     <SafeAreaView style={{ backgroundColor: colors.cor2, flex: 1 }}>
+
+
+
       <View
         style={{
           flexDirection: "row",
@@ -94,6 +98,8 @@ const Home = () => {
 
         { <Image style={{ height: 80, width: 80 }} source={{ uri: user.image }} /> }
       </View>
+
+      <WeekCalendar />
 
       <View>
         <FlatList
