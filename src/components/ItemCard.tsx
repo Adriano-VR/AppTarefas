@@ -1,4 +1,4 @@
-import { Alert, Text } from "react-native";
+import { Alert, Button, Text } from "react-native";
 import { Task } from "../types/Task";
 import { categories } from "../utils/data/data";
 import { View } from "react-native";
@@ -9,6 +9,7 @@ import Animated from 'react-native-reanimated';
 import { SlideInRight, SlideOutLeft } from 'react-native-reanimated';
 import { useCustomFonts } from '../fonts/useCustomFonts';
 import moment from "moment";
+import { useNavigation } from "@react-navigation/native";
 
 
 
@@ -20,7 +21,10 @@ interface Props {
   handleDoneTask: (id: number) => void;
 }
 
+
 const ItemCard = ({ task, handleRemoveTask, handleDoneTask }: Props) => {
+
+  const navigation = useNavigation<any>()
   const category = categories.filter((c) => c.value === task.category);
 
   const handleDelete = () => {
@@ -105,8 +109,13 @@ const ItemCard = ({ task, handleRemoveTask, handleDoneTask }: Props) => {
           <Text style={{color:'white', fontFamily: 'LuckiestGuy_400Regular',}}>{task.title}</Text>
           
           </View>
-          
+          <Button
+        onPress={()=>navigation.navigate("Detalhes", task)}
+          title="Detalhes"
+
+        />
         </Animated.View>
+
       </Swipeable>
     </View>
   );

@@ -28,7 +28,14 @@
       "favicon": "./assets/favicon.png"
     },
     "plugins": [
-      "expo-font"
+      ["expo-font"],
+      [
+        "expo-image-picker",
+          {
+            "PhotoPermission": "Permita que $(PRODUCT_NAME) acesse sua galeria de fotos.",
+            "cameraPermission": "Permita que $(PRODUCT_NAME) acesse sua câmera."
+          }
+      ]
     ]
   }
 }

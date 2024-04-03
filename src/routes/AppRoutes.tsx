@@ -9,6 +9,7 @@ import { TouchableOpacity,Text } from "react-native";
 import { FontAwesome } from '@expo/vector-icons';
 import Criar from "../screens/AddTask";
 import React from "react"
+import TaskDetails from "../screens/TaskDetails";
 
 const Stack = createNativeStackNavigator();
 
@@ -55,7 +56,20 @@ export const HomeRoutes = () => {
           },
         }}
       />
+
+      <Stack.Screen
+        name="Detalhes"
+        component={TaskDetails}
+        options={{
+          headerTitle: "Detalhes",
+          headerTintColor: "white",
+          headerStyle: {
+            backgroundColor: colors.cor2
+          }
+        }}
+        />
     </Stack.Navigator>
+
   );
 };
 

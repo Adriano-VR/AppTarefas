@@ -4,6 +4,7 @@ import { Task } from "../types/Task";
 import React from "react"
 import * as SQLite from "expo-sqlite";
 import moment from "moment";
+import * as ImagePicker from "expo-image-picker"
 
 
 type TaskContextProps = {
@@ -26,6 +27,12 @@ type TaskContextProps = {
   dateInput: Date;
   setDateInput: (value: Date) => void;
   getTasksByDate: (date: string) => void;
+
+  pickImage: (id:number) => void;
+  takePhoto: (id: number) => void;
+  images: string[];
+  setImages: (value: string[]) => void;
+  taskSelected: string;
 };
 
 type TaskProviderProps = {
@@ -45,6 +52,8 @@ export const TaskContextProvider = ({ children }: TaskProviderProps) => {
   const [open, setOpen] = useState<boolean>(false);
   const [dateInput, setDateInput] = useState(new Date());
   const [dateSelected, setDateSelected] = useState("");
+  const [taskSelected, setTaskSelected] = useState("")
+  const [images, setImages] = useState<string[]>([])
 
 
   
@@ -133,7 +142,7 @@ export const TaskContextProvider = ({ children }: TaskProviderProps) => {
     if (taskInput !== "" && categoryValue) {
       db.transaction((tx) => {
         tx.executeSql(
-          "insert into tasks (completed, title, category, date) values (0, ?, ?, ?)",
+          "insert into tasks (completed, title, category, date, images) values (0, ?, ?, ?)",
           [taskInput, categoryValue, moment(dateInput).format("YYYY-MM-DD")]
         );
         tx.executeSql(
@@ -194,6 +203,55 @@ export const TaskContextProvider = ({ children }: TaskProviderProps) => {
   };
 
 
+  const handleAddImage = async(file: string[], id: number) =>{
+    db.transaction((tx)=>{
+      tx.executeSql(
+        "update tasks set images = ? where id = ?;",
+        [file.toString(),
+        id]
+      );
+
+      tx.executeSql(
+        "select * from tasks where completed = 0;",
+        [],
+        (_, { rows: { _array }})=> {
+          setTaskList(_array);
+        }
+      )
+    })
+  }
+
+  const handleImage = (file:string, id: number) => {
+    let newImages = [ ... images];
+    newImages.push(file);
+    setImages( newImages);
+    handleAddImage(newImages, id);
+  }
+
+  const pickImage = async (id: number) => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      aspect: [16, 9],
+      base64: true,
+    })
+
+    if (!result.canceled &&  result.assets[0].base64) {
+      handleImage(result.assets[0].base64, id)
+    }
+  }
+
+  const takePhoto = async(id: number) => {
+    let data = await ImagePicker.launchCameraAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      aspect: [16, 9],
+      base64: true
+    });
+
+    if(!data.canceled && data.assets[0].base64) {
+      handleImage(data.assets[0].base64, id);
+    }
+  }
+
   return (
     <TaskContext.Provider
       value={{
@@ -215,7 +273,12 @@ export const TaskContextProvider = ({ children }: TaskProviderProps) => {
         setOpen,
         dateInput,
       setDateInput,
-      getTasksByDate
+      getTasksByDate,
+      pickImage,
+      takePhoto,
+      images,
+      setImages,
+      taskSelected
       }}
     >
       {children}
