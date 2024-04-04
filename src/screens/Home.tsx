@@ -48,6 +48,7 @@ const Home = () => {
     LuckiestGuy_400Regular,
   });
 
+
  
 
   if (!fontsLoaded && !fontError) {

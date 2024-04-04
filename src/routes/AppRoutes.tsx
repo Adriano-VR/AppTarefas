@@ -67,7 +67,7 @@ export const HomeRoutes = () => {
             backgroundColor: colors.cor2
           }
         }}
-        />
+        /> 
     </Stack.Navigator>
 
   );

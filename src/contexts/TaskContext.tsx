@@ -13,7 +13,7 @@ type TaskContextProps = {
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
   getTasksByCategory: (category: string) => any;
   getCompletedTasks: () => any;
-  handleAddTask: () => void;
+  handleAddTask: (image:string) => void;
   handleRemoveTask: (id: number ) => any;
   handleDoneTask: (id:number) => any;
   taskList: Task[];
@@ -138,12 +138,12 @@ export const TaskContextProvider = ({ children }: TaskProviderProps) => {
   };
 
 
-  const handleAddTask = async () => {
+  const handleAddTask = async (image) => {
     if (taskInput !== "" && categoryValue) {
       db.transaction((tx) => {
         tx.executeSql(
-          "insert into tasks (completed, title, category, date, images) values (0, ?, ?, ?)",
-          [taskInput, categoryValue, moment(dateInput).format("YYYY-MM-DD")]
+          "insert into tasks (completed, title, category, date, images) values (0, ?, ?, ?,?)",
+          [taskInput, categoryValue, moment(dateInput).format("YYYY-MM-DD"),image]
         );
         tx.executeSql(
           `select * from tasks where completed = 0;`,

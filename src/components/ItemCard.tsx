@@ -1,4 +1,4 @@
-import { Alert, Button, Text } from "react-native";
+import { Alert, Button, Text, TouchableOpacity } from "react-native";
 import { Task } from "../types/Task";
 import { categories } from "../utils/data/data";
 import { View } from "react-native";
@@ -10,6 +10,7 @@ import { SlideInRight, SlideOutLeft } from 'react-native-reanimated';
 import { useCustomFonts } from '../fonts/useCustomFonts';
 import moment from "moment";
 import { useNavigation } from "@react-navigation/native";
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 
 
@@ -101,6 +102,7 @@ const ItemCard = ({ task, handleRemoveTask, handleDoneTask }: Props) => {
             borderRadius: 5,
             width:'95%',
             alignSelf:'center',
+            flexDirection:'row'
           }}
         >
               
@@ -109,11 +111,13 @@ const ItemCard = ({ task, handleRemoveTask, handleDoneTask }: Props) => {
           <Text style={{color:'white', fontFamily: 'LuckiestGuy_400Regular',}}>{task.title}</Text>
           
           </View>
-          <Button
-        onPress={()=>navigation.navigate("Detalhes", task)}
-          title="Detalhes"
 
-        />
+          <TouchableOpacity onPress={()=>navigation.navigate("Detalhes", task)}>
+
+
+          <MaterialCommunityIcons name="details" size={25} color="white" />
+          </TouchableOpacity>
+          
         </Animated.View>
 
       </Swipeable>
