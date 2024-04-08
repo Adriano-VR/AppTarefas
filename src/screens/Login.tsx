@@ -28,16 +28,16 @@ import { BounceIn, BounceOut } from 'react-native-reanimated';
 
 const Login = () => {
   const { login } = useContext(UserContext);
-  const [username, setUsername] = useState("juventude");
-  const [password, setPassword] = useState("admin");
+  const [username, setUsername] = useState("gremio");
+  const [password, setPassword] = useState("campeao");
   
 
   return (
     <Container style={{ backgroundColor: "black" }}>
     
     <Image 
-    style={{height:200,width:200}}
-    source={require("../../assets/transferir.jpg")}
+    style={{height:'50%',width:'80%'}}
+    source={require("../../assets/campeao.png")}
 
     />
 

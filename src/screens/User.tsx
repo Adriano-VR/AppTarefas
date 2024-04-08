@@ -48,8 +48,10 @@ export default User;
 
 const styles = StyleSheet.create({
   img: {
-    width: 150,
-    height: 150,
+    width: '100%',
+    height: '100%',
+    borderRadius:250
+
   },
   card: {
     alignItems:'center'
@@ -59,8 +61,9 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "white",
     alignItems:'center',
-    padding:25,
-    marginBottom:15
+    marginBottom:15,
+    width: 200,
+    height: 200,
   }
    
 

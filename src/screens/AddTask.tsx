@@ -1,5 +1,5 @@
 import { SafeAreaView } from "react-native-safe-area-context"
-import { Text, TouchableOpacity, View ,StyleSheet, TextInput, Alert} from "react-native"
+import { Text, TouchableOpacity, View ,StyleSheet, TextInput, Alert,Image} from "react-native"
 import { colors } from "../Colors/colors"
 import DropDownPicker from "react-native-dropdown-picker"
 import React, { useContext, useState } from "react"
@@ -141,9 +141,17 @@ const Criar = () => {
         }
           />
       
-      </View>
 
      
+
+
+      </View>
+      <Image 
+       style={{height:'80%',width:'100%'}}
+     source={require("../../assets/gremiocamp.jpg")}
+
+    />
+   
            
         </SafeAreaView>
     )
