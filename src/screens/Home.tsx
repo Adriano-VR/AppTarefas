@@ -90,7 +90,7 @@ const Home = () => {
               fontSize: 19,
             }}
           >
-            { user.name }
+            { user.firstName }
           </Text>
         </View>
 

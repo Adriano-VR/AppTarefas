@@ -10,7 +10,7 @@ import React, { useContext, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { UserContext } from "../contexts/UserContext";
 import { Input, Block } from "galio-framework";
-import { Button } from "galio-framework";
+import { Button} from "galio-framework";
 import { colors } from "../Colors/colors";
 import { Container } from "../styledComponents/styled";
 import Animated from 'react-native-reanimated';
@@ -20,6 +20,7 @@ import { LightSpeedInRight, LightSpeedOutLeft } from 'react-native-reanimated';
 import { FlipInEasyX, FlipOutEasyX } from 'react-native-reanimated';
 
 import { BounceIn, BounceOut } from 'react-native-reanimated';
+import { ButtonFunction } from "../components/Button";
 
 
 
@@ -27,7 +28,7 @@ import { BounceIn, BounceOut } from 'react-native-reanimated';
 
 
 const Login = () => {
-  const { login } = useContext(UserContext);
+  const { login,googleSignIn } = useContext(UserContext);
   const [username, setUsername] = useState("gremio");
   const [password, setPassword] = useState("campeao");
   
@@ -76,6 +77,12 @@ const Login = () => {
       style={styles.btn}
       >LOGIN
       </Button>
+
+      <ButtonFunction
+        onPress={() => googleSignIn() }
+        title="Login com Google"
+        icon="google"
+        />
     
       
     </Container>

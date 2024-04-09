@@ -1,0 +1,29 @@
+Configuration: Build Credentials 2JJniwhZ7w (Default)
+Keystore
+Type                JKS
+Key Alias           8a80e2bdc00dc7f30ae46f6866e8b7da
+MD5 Fingerprint     42:45:5F:FB:12:A0:90:BB:F0:B1:99:3C:06:97:C8:C1
+SHA1 Fingerprint    FA:FC:62:B8:1D:D3:F3:41:E3:8D:FD:5C:51:35:1F:CB:3B:6B:08:47
+SHA256 Fingerprint  60:B7:96:2F:D0:75:54:74:4E:3B:71:B0:BA:48:D3:2A:DB:6B:88:F1:AA:31:81:6C:B8:0F:21:EE:FB:4D:69:DF
+Updated             19 minutes ago
+
+
+Android Credentials     
+Project                 DiegoCosta
+Application Identifier  com.adriano2607.DiegoCosta
+
+Push Notifications (FCM Legacy)
+  None assigned yet
+
+Push Notifications (FCM V1): Google Service Account Key For FCM V1
+  None assigned yet
+
+Submissions: Google Service Account Key for Play Store Submissions
+  None assigned yet
+
+
+
+idclient 1014245539458-oscc6d0us2i4m3ttm5utuck0b2a8qoqo.apps.googleusercontent.com
+
+instale npx expo install
+@react-native-google-signin/google-signin
