@@ -1,10 +1,14 @@
 {
     "user": {
-        "id": 1,
+        "id": "1",
         "username": "gremio",
-        "name": "Maior do Sul",
+        "firstName": "Maior do Sul",
+        "lastName": "",
         "password": "campeao",
         "image": "https://pbs.twimg.com/profile_images/1668985526626525197/63sAC4pz_400x400.jpg",
-        "token": "1a2b3c4d"
+        "token": "1a2b3c4d",
+        "gender": "",
+        "email":""
     }
 }
+

@@ -30,7 +30,7 @@ const User = () => {
         <View style={styles.containerimg}>
         <Image style={styles.img} source={{ uri: user ? user.image : "N/A" }} />
         </View>
-        <Text style={{textTransform:'capitalize',fontSize:25,color:'white'}}>{`${user ? user.name : "N/A"}`} </Text>
+        <Text style={{textTransform:'capitalize',fontSize:25,color:'white'}}>{`${user ? user.firstName : "N/A"}`} </Text>
         <Text style={{fontStyle:'italic',color:'white'}}>{user ? user.username : "N/A"}</Text>
        
      
