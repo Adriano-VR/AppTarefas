@@ -27,3 +27,29 @@ idclient 1014245539458-oscc6d0us2i4m3ttm5utuck0b2a8qoqo.apps.googleusercontent.c
 
 instale npx expo install
 @react-native-google-signin/google-signin
+
+
+-----------------------------------------------------------------------------------
+Android Credentials     
+Project                 TarefasApp
+Application Identifier  com.adriano2607.Tarefas
+
+Push Notifications (FCM Legacy)
+  None assigned yet
+
+Push Notifications (FCM V1): Google Service Account Key For FCM V1
+  None assigned yet
+
+Submissions: Google Service Account Key for Play Store Submissions
+  None assigned yet
+
+Configuration: Build Credentials ryAw0lWNsk (Default)
+Keystore
+Type                JKS
+Key Alias           c100aed9d8a8d9e559495c9c3c3d7a78
+MD5 Fingerprint     D4:DF:3E:08:35:72:EB:28:82:C9:F1:0B:4B:82:C8:4A
+SHA1 Fingerprint    A5:79:F9:E0:E8:69:4C:9E:F2:4B:9B:77:19:5F:23:1B:B8:F6:D5:24
+SHA256 Fingerprint  BD:05:11:2C:1D:8F:96:05:15:7B:FF:EB:8B:8D:10:06:38:DA:DF:68:1D:CA:B3:00:F9:B6:6A:25:1B:AA:CE:B0
+Updated             18 minutes ago
+
+127413190408-k1kj0gu2oaailflvkk973jdfspvvi50h.apps.googleusercontent.com

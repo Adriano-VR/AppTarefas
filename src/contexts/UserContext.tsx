@@ -135,11 +135,17 @@ export const UserContextProvider = ({ children }: UserProviderProps) => {
     setToken("");
   };
 
+  
 
   const googleSignIn = async () => {
     try {
-      await GoogleSignin.hasPlayServices();
+     
+
+       await GoogleSignin.hasPlayServices();
       const res = await GoogleSignin.signIn();
+      console.log(res);
+      
+      
       if (res) {
         const user: UserDTO = {
           id: res.user.id,

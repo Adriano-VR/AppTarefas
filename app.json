@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Juventude",
-    "slug": "DiegoCosta",
+    "name": "App Tarefas",
+    "slug": "TarefasApp",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -22,7 +22,7 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.adriano2607.DiegoCosta",
+      "package": "com.adriano2607.Tarefas",
       "permissions": [
         "android.permission.RECORD_AUDIO"
       ]
@@ -44,7 +44,7 @@
     ],
     "extra": {
       "eas": {
-        "projectId": "64aef8c8-4241-4d88-a516-a5bd798e93e5"
+        "projectId": "d78e13ed-c23d-49f4-8808-86c1995cecb8"
       }
     }
   }
