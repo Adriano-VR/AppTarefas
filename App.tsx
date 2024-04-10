@@ -15,7 +15,7 @@ const configGoogleSignIn = () => {
   GoogleSignin.configure({
     
     webClientId: "127413190408-k1kj0gu2oaailflvkk973jdfspvvi50h.apps.googleusercontent.com",
-  
+    profileImageSize: 120,
   });
 }
 
